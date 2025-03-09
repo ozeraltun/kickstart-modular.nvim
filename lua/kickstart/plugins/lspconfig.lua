@@ -59,7 +59,27 @@ return {
       --    That is to say, every time a new file is opened that is associated with
       --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
       --    function will be executed to configure the current buffer
-      vim.api.nvim_create_autocmd('LspAttach', {
+
+      local lspconfig = require('lspconfig')
+
+      -- Set up clangd
+      lspconfig.clangd.setup {
+        cmd = { "clangd", "--background-index", "--clang-tidy", "--header-insertion=iwyu" },
+        filetypes = { "c", "cpp", "objc", "objcpp" },
+        root_dir = lspconfig.util.root_pattern("compile_commands.json", ".git"),
+        settings = {
+          clangd = {
+            compilationDatabaseDirectory = "path/to/your/compile_commands.json", -- Customize this to point to the correct path
+            extraArgs = {
+              "-I/home/ozer/cpp_example/include",
+              "-I/path/to/your/include",  -- Add your specific header directories here
+              "-I/path/to/another/include",
+            },
+          },
+        },
+      }
+
+        vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
           -- NOTE: Remember that Lua is a real programming language, and as such it is possible
