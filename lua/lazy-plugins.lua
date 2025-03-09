@@ -24,6 +24,10 @@ require('lazy').setup({
   -- modular approach: using `require 'path/name'` will
   -- include a plugin definition from file lua/path/name.lua
 
+  require 'kickstart/plugins/indent_line',
+
+  require 'kickstart/plugins/debug',
+
   require 'kickstart/plugins/gitsigns',
 
   require 'kickstart/plugins/which-key',
@@ -31,8 +35,6 @@ require('lazy').setup({
   require 'kickstart/plugins/telescope',
 
   require 'kickstart/plugins/lspconfig',
-
-  require 'kickstart/plugins/conform',
 
   require 'kickstart/plugins/cmp',
 
